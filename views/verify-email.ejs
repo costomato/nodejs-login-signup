@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify email</title>
+</head>
+
+<body>
+    <div>
+        <h3>
+            Verify OTP for email: <%= email %>
+        </h3>
+    </div>
+    <div>
+        <form id="otpform">
+            <input type="number" maxlength="6" id="otp" placeholder="OTP" required>
+            <br><br>
+            <button type="submit">Verify</button>
+            <br><br>
+        </form>
+        <button id="resend">Resend OTP</button>
+        <p id="timer"></p>
+        <br>
+        <button id="logout" onclick="logout()">Log out</button>
+        <br>
+        <h4 id="message"></h4>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+    integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    const BASE_URL = location.origin;
+    axios.defaults.baseURL = `${BASE_URL}/api/v1`;
+    axios.defaults.headers.common['api-key'] = 'mockKey987';
+
+    let timerOn = true;
+    let timerFinished = true;
+    $("#resend").click(() => {
+        if (timerFinished) {
+            timerFinished = false;
+            sendVerificationOtp();
+        }
+    })
+
+    function sendVerificationOtp() {
+        $("#message").html("Sending OTP...")
+        axios.post('/sendOtp', {
+            email: "<%-email%>",
+            _id: ('; ' + document.cookie).split(`; user=`).pop().split(';')[0],
+            name: ('; ' + document.cookie).split(`; name=`).pop().split(';')[0]
+        })
+            .then(res => {
+                if (res.data.statusOk) {
+                    $("#message").html("OTP sent. Please check your mail.")
+                    startTimer(120);
+                } else {
+                    timerFinished = true;
+                    $("#message").html(res.data.statusString)
+                }
+            })
+            .catch(err => {
+                timerFinished = true;
+                $("#message").html("Some error ocurred")
+            });
+    }
+
+    $("#otpform").submit(() => {
+        verifyOtp();
+        return false;
+    })
+
+    function verifyOtp() {
+        const otp = `${$("#otp").val()}`;
+        axios.post('/verifyOtp', {
+            email: "<%-email%>",
+            _id: ('; ' + document.cookie).split(`; user=`).pop().split(';')[0],
+            _otp: otp
+        })
+            .then(res => {
+                if (res.data.statusOk)
+                    window.location.href = BASE_URL;
+                else
+                    $("#message").html(res.data.statusString)
+
+            })
+            .catch(err => {
+                $("#message").html("Some error ocurred")
+            });
+    }
+
+    function startTimer(remaining) {
+        var m = Math.floor(remaining / 60);
+        var s = remaining % 60;
+
+        m = m < 10 ? '0' + m : m;
+        s = s < 10 ? '0' + s : s;
+        document.getElementById('timer').innerHTML = `Resend again in ${m}:${s}`;
+        remaining -= 1;
+
+        if (remaining >= 0 && timerOn) {
+            setTimeout(() => {
+                startTimer(remaining);
+            }, 1000);
+            return;
+        }
+
+        if (!timerOn) {
+            return;
+        }
+
+        timerFinished = true;
+    }
+
+    const logout = () => {
+        document.cookie.split(";").forEach((c) => { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+        window.location.href = `${BASE_URL}/login`;
+    }
+</script>
+
+</html>

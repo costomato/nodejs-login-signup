@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <div>
+        <h2>
+            Welcome,<br>
+            <%= username %>
+        </h2>
+    </div>
+    <div>
+        <button onclick="logout()">Log out</button>
+    </div>
+    <div>
+        <h3>Settings:</h3>
+        <form id="updateform">
+            <input type="text" id="name" placeholder="New name">
+            <br>
+            <hr>
+            <input type="password" id="pass1" minlength="8" placeholder="New password">
+            <br>
+            <input type="password" id="pass2" minlength="8" placeholder="Confirm new password">
+            <br>
+            <hr>
+            <button type="submit">Update</button>
+            <br>
+        </form>
+        <hr>
+        <h3 id="message"></h3>
+        <hr>
+        <form id="emailUpdateform">
+            <input type="email" id="email" placeholder="New email" required>
+            <br><br>
+            <button type="submit">Update</button>
+            <br>
+        </form>
+    </div>
+    <hr>
+    <hr>
+    <hr>
+    <form id="deleteform">
+        <input type="password" id="currentPass" placeholder="Current password" required>
+        <br><br>
+        <button type="submit">Delete account</button>
+        <br>
+    </form>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+    integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    axios.defaults.baseURL = `${location.origin}/api/v1`;
+    axios.defaults.headers.common['api-key'] = 'mockKey987';
+    const logout = () => {
+        document.cookie.split(";").forEach((c) => { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+        window.location.href = `${location.origin}/login`;
+    }
+
+    $('#updateform').submit(() => {
+        $("#message").html("Updating... Please wait.")
+        const update = {};
+        if ($("#name").val())
+            update.name = $("#name").val();
+        if (($("#pass1").val() || $("#pass2").val()))
+            if ($("#pass1").val() == $("#pass2").val())
+                update.password = $("#pass1").val();
+            else
+                $("#message").html("Passwords do not match")
+
+        axios.post('/updateuser', {
+            _id: ('; ' + document.cookie).split(`; user=`).pop().split(';')[0],
+            sessionToken: ('; ' + document.cookie).split(`; sessionToken=`).pop().split(';')[0],
+            update: update
+        })
+            .then(res => {
+                if (res.data.statusOk) {
+                    const EXP_DAYS = 180
+                    const d = new Date();
+                    d.setTime(d.getTime() + (EXP_DAYS * 24 * 60 * 60 * 1000));
+                    if (update.name)
+                        document.cookie = `name=${update._name}; expires=${d.toUTCString()}; path=/`;
+                    if (res.data.data.newSessionToken)
+                        document.cookie = `sessionToken=${res.data.data.newSessionToken}; expires=${d.toUTCString()}; path=/`;
+                }
+                $("#message").html(res.data.statusString)
+            })
+            .catch(err => {
+                $("#message").html("Some error ocurred")
+            });
+
+        return false;
+    })
+
+    $('#emailUpdateform').submit(() => {
+        $("#message").html("Sending verification link on new email... Please wait.");
+        axios.post('/getEmailUpdateLink', {
+            oldEmail: ('; ' + document.cookie).split(`; email=`).pop().split(';')[0],
+            sessionToken: ('; ' + document.cookie).split(`; sessionToken=`).pop().split(';')[0],
+            newEmail: $("#email").val()
+        })
+            .then(res => {
+                $("#message").html(res.data.statusString)
+            })
+            .catch(err => {
+                $("#message").html("Some error ocurred")
+            });
+
+        return false;
+    })
+
+    $('#deleteform').submit(() => {
+        $("#message").html("Deleting account...");
+        axios.delete('/deleteUser', {
+            data: {
+                _id: ('; ' + document.cookie).split(`; user=`).pop().split(';')[0],
+                email: ('; ' + document.cookie).split(`; email=`).pop().split(';')[0],
+                password: $("#currentPass").val()
+            }
+        })
+            .then(res => {
+                if (res.data.statusOk)
+                    logout();
+                $("#message").html(res.data.statusString);
+            })
+            .catch(err => {
+                $("#message").html("Some error ocurred")
+            });
+
+        return false;
+    })
+</script>
+
+</html>
