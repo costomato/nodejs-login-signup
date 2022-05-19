@@ -12,6 +12,7 @@ const createUser = async (name, email, pass) => {
       sessionToken: generateToken(45)
     })
     .catch((err) => {
+      console.log("-------------------\nError occurred while creating account:\n" + err + "\n-------------------")
       response.statusOk = false;
       console.log(err)
       response.statusString = "Email already exists";
