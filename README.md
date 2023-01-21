@@ -4,7 +4,7 @@
 This is a login signup demonstration written in node.js. The backend is the main part of this project. Frontend is only for demonstration purpose of all features of this project. Backend uses expressjs for processing http requests, mongo-db for database.
 
 ## Testing
-#### [Click here to test this app](https://nodejs-login-signup.herokuapp.com/)
+#### [Click here to test this app](https://nodejs-login-signup.onrender.com/)
 
 ## Usage
 
