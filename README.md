@@ -4,7 +4,7 @@
 This is a login signup demonstration written in node.js. The backend is the main part of this project. Frontend is only for demonstration purpose of all features of this project. Backend uses expressjs for processing http requests, mongo-db for database.
 
 ## Testing
-#### [Click here to test this app](https://nodejs-login-signup.herokuapp.com/)
+#### [Click here to test this app](https://nodejs-login-signup.onrender.com/)
 
 ## Usage
 
@@ -24,7 +24,7 @@ This is a login signup demonstration written in node.js. The backend is the main
 ## Basics
 
 #### REST API BASE URL:
-`https://nodejs-login-signup.herokuapp.com/api/v1/`
+`https://nodejs-login-signup.onrender.com/api/v1/`
 
 #### Environment Variables:
 
@@ -35,7 +35,7 @@ This is a login signup demonstration written in node.js. The backend is the main
 - EMAIL = Email account from which verification OTP, password reset link, etc will be sent to user
 - PASS = Password of the email account
 - BASE_URL = Base URL of site
-  - In this case, it is `https://nodejs-login-signup.herokuapp.com/`
+  - In this case, it is `https://nodejs-login-signup.onrender.com`
 
 ## Note
 
