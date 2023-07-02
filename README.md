@@ -19,6 +19,7 @@ This is a login signup demonstration written in node.js. The backend is the main
 | /sendOtp | POST | Get OTP on email for verification | `{ email: String, name: String, _id: String }` | `{ statusOk: Boolean, statusString: String }` |
 | /verifyOtp | POST | Verify OTP for email verification | `{ _id: String, email: String, _otp: String }` | `{ statusOk: Boolean, statusString: String }` |
 | /getId | POST | Get id for a particular account | `{ email: String, password: String }` | `{ statusOk: Boolean, statusString: String }` |
+| /sendMail | POST | Send details to mail | `{ firstName: String, lastName: String, email: String, message: String, phone: String }` | `{ statusOk: Boolean, statusString: String }` |
 
 ## Basics
 

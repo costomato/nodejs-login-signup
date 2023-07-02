@@ -13,6 +13,9 @@ const { readUsers, getId, getUserByToken } = require("./public/controller/readUs
 const deleteUser = require("./public/controller/deleteUser");
 const authenticateUser = require("./public/controller/authenticateUser");
 const { sendVerificationOtp, verifyOtp, verifyNewEmail } = require("./public/controller/verifyUser");
+
+const sendMail = require("./public/utils/sendMail");
+
 const PORT = process.env.PORT || 8080;
 const API_KEY = process.env.API_KEY;
 const PRIMARY_ENDPOINT = "/api/v1";
@@ -195,6 +198,19 @@ app.post(`${PRIMARY_ENDPOINT}/verifyOtp`, async (req, res) => {
   */
   if (req.headers["api-key"] === API_KEY) {
     const response = await verifyOtp(req.body);
+    res.send(response);
+  } else {
+    res.send({ statusOk: false, statusString: "API authentication failed" });
+  }
+});
+
+app.post(`${PRIMARY_ENDPOINT}/sendMail`, async (req, res) => {
+  /*
+  req.body contains
+  first name, last name, email, message, phone
+  */
+  if (req.headers["api-key"] === API_KEY) {
+    const response = await sendMail(req.body);
     res.send(response);
   } else {
     res.send({ statusOk: false, statusString: "API authentication failed" });
