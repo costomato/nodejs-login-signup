@@ -38,10 +38,10 @@ const sendMail = async (user) => {
     const send = async (options) => {
         return new Promise((resolve, reject) => {
             transporter.sendMail(options, async (error, _) => {
-                console.log("Error = " + error);
                 if (error) {
                     response.statusOk = false;
                     response.statusString = "Failed to send mail";
+                    console.log("Error = " + error);
                     resolve(false);
                 } else {
                     response.statusOk = true;
@@ -58,25 +58,25 @@ const sendMail = async (user) => {
         from: process.env.BOT_MAIL,
         to: user.email || process.env.REC_MAIL,
         subject: 'Thank you for contacting us!',
-        text: `Dear ${user.firstName + user.lastName ? " " + user.lastName : ""},
+        text: `Dear ${user.firstName + (user.lastName ? " " + user.lastName : "")},
 
-        Thank you for reaching out to FlyProsper! We appreciate your interest and value your time. Your message has been received, and we are thrilled to connect with you.
+Thank you for reaching out to FlyProsper! We appreciate your interest and value your time. Your message has been received, and we are thrilled to connect with you.
         
-        At FlyProsper, we are dedicated to transforming ideas into reality and delivering innovative solutions. As the CEO of FlyProsper, I, Kaustubh, personally assure you that your inquiry is important to us. Our team of experts is currently reviewing your message, and we will provide you with a thoughtful response shortly.
+At FlyProsper, we are dedicated to transforming ideas into reality and delivering innovative solutions. As the CEO of FlyProsper, I, Kaustubh, personally assure you that your inquiry is important to us. Our team of experts is currently reviewing your message, and we will provide you with a thoughtful response shortly.
         
-        In the meantime, feel free to explore our website at www.flyprosper.com to learn more about our services and the exciting projects we have undertaken. We are committed to driving your success and helping you achieve your goals.
+In the meantime, feel free to explore our website at www.flyprosper.com to learn more about our services and the exciting projects we have undertaken. We are committed to driving your success and helping you achieve your goals.
         
-        If you have any further questions or require immediate assistance, please don't hesitate to reach out to us at support@flyprosper.com. We are here to support you every step of the way.
+If you have any further questions or require immediate assistance, please don't hesitate to reach out to us at support@flyprosper.com. We are here to support you every step of the way.
         
-        Once again, thank you for choosing FlyProsper. We look forward to collaborating with you and turning your vision into reality!
+Once again, thank you for choosing FlyProsper. We look forward to collaborating with you and turning your vision into reality!
         
-        Best regards,
+Best regards,
         
-        Kaustubh
-        CEO, FlyProsper
+Kaustubh
+CEO, FlyProsper
         
         
-        Please note that this email address (noreply@flyprosper.com) is not monitored for incoming messages. If you need further assistance or have any questions, please reach out to our support team at support@flyprosper.com. We are here to help you and provide prompt assistance.`
+Please note that this email address (noreply@flyprosper.com) is not monitored for incoming messages. If you need further assistance or have any questions, please reach out to our support team at support@flyprosper.com. We are here to help you and provide prompt assistance.`
     },
         (err, _) => {
             if (err)
