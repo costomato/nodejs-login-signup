@@ -1,18 +1,20 @@
 const nodemailer = require("nodemailer");
 
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.REC_EMAIL,
-        pass: process.env.REC_PASS,
-    },
-});
 
 const sendMail = async (user) => {
     /*
     user contains:
     first name, last name, email, message, phone
      */
+
+    const transporter = nodemailer.createTransport({
+        service: process.env.MAIL_SERVICE,
+        auth: {
+            user: process.env.REC_EMAIL,
+            pass: process.env.REC_PASS,
+        },
+    });
+
     const response = { statusOk: false, statusString: "" };
 
     const mailOptions = {
