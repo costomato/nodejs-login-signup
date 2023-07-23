@@ -1,29 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('https://t3.ftcdn.net/jpg/04/85/99/36/360_F_485993606_sRsHaBPEbZVumWht2od5P6zsqCgynWMF.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(1px);
+        }
+
+
+        .centered-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-card {
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: rgba(211, 155, 206, 0.3);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+        }
+
+        #loginform {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="submit"] {
+            width: 100%;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(37, 79, 173);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: 0px;
+            border-radius: 25px;
+            margin-top: 24px;
+            margin-bottom: 40px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgb(248, 100, 137);
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .remember-me {
+            margin-top: 18px;
+        }
+        input[type="checkbox"]:checked+label::after {
+            content: '';
+            position: absolute;
+            width: 1.2ex;
+            height: 0.4ex;
+            background: rgba(0, 0, 0, 0);
+            top: 0.9ex;
+            left: 0.4ex;
+            border: 3px solid rgb(248, 100, 137);
+            border-top: none;
+            border-right: none;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+        }
+
+        input[type="checkbox"] {
+            line-height: 2.1ex;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            position: absolute;
+            left: -999em;
+        }
+
+        input[type="checkbox"]+label {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"]+label::before {
+            content: "";
+            display: inline-block;
+            vertical-align: -25%;
+            height: 2ex;
+            width: 2ex;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(166, 166, 166);
+            border-radius: 4px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25);
+            margin-right: 0.5em;
+        }
+    </style>
 </head>
+
 <body>
-    <div> 
-        <form id="loginform">
-            <input type="email" id="email" placeholder="Email" required>
-            <br><br>
-            <input type="password" id="pass" placeholder="Password" required>
-            <br><br>
-            <button type="submit" id="btnlogin">Login</button>
-            <br><br>
-            <input type="checkbox" id="check">
-            <span>Remember me</span>
-            <br><br>
-        </form>
-        <a href="/forgot-password">Forgot Password?</a><br>
-        <p>Don't have an account? <a href="/signup">Create account</a></p>
+    <div class="background-container"></div>
+    <div class="centered-container">
+        <div class="login-card">
+            <form id="loginform">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="pass" placeholder="Password" required>
+                <div class="remember-me">
+                    <input type="checkbox" id="check"><label for="check">Remember me</label>
+                </div>
+                <input type="submit" id="btnlogin" value="Login">
+            </form>
+            <a href="/forgot-password">Forgot Password?</a>
+            <p>Don't have an account? <a href="/signup">Create account</a></p>
+        </div>
     </div>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+    integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="script.js"></script>
+
 </html>

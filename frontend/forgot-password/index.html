@@ -5,17 +5,90 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot password</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('https://t3.ftcdn.net/jpg/04/85/99/36/360_F_485993606_sRsHaBPEbZVumWht2od5P6zsqCgynWMF.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(1px);
+        }
+
+        .centered-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-card {
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: rgba(211, 155, 206, 0.3);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 50px 18px 50px;
+        }
+
+        #resetform {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            width: 100%;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(37, 79, 173);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: 0px;
+            border-radius: 25px;
+            margin-top: 24px;
+            margin-bottom: 40px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgb(248, 100, 137);
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <form id="resetform">
-            <input type="email" id="email" placeholder="Email" required>
-            <br><br>
-            <button type="submit">Send link</button>
-            <br>
-        </form>
-        <p>Go to <a href="/login">login</a></p>
-        <h4 id="message"></h4>
+    <div class="background-container"></div>
+    <div class="centered-container">
+        <div class="login-card">
+            <form id="resetform">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="submit" value="Send link">
+            </form>
+            <p>Go to <a href="/login">login</a></p>
+            <h4 id="message"></h4>
+        </div>
     </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

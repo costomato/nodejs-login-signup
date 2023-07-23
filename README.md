@@ -40,11 +40,19 @@ This is a login signup demonstration written in node.js. The backend is the main
 ## Note
 
 #### Email sending work is done using nodemailer. So, if you are using gmail, google doesn't let third party services to sign in. You need to follow these steps for gmail:
-
+1. Method 1
 - Enable less secure apps
   - https://www.google.com/settings/security/lesssecureapps
 - Disable Captcha temporarily so you can connect the new device/server
   - https://accounts.google.com/b/0/displayunlockcaptcha
+
+2. Method 2
+- Enable 2 factor authentication and use app passwords.
+
+#### If you are seeing this message in mac while trying to start mongodb: `connect ECONNREFUSED 127.0.0.1:27017`, then try the following command:
+```zsh
+sudo mongod --dbpath /usr/local/var/mongodb
+```
 
 ## Contributing
 
