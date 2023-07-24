@@ -5,139 +5,637 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Enchanted Garden - Just another site</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            padding: 0;
+            padding-top: 70px;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('https://t3.ftcdn.net/jpg/04/85/99/36/360_F_485993606_sRsHaBPEbZVumWht2od5P6zsqCgynWMF.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(1px);
+        }
+
+        nav {
+            background-color: rgba(211, 155, 206, 0.3);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            color: #fff;
+            display: flex;
+            overflow: hidden;
+            justify-content: space-between;
+            padding: 14px 24px;
+            align-items: center;
+            margin: 10px 10px;
+            border-radius: 12px;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: calc(100% - 20px);
+            z-index: 3;
+        }
+
+        .brand {
+            font-size: 24px;
+            margin: 0;
+            padding: 0;
+            color: rgb(37, 79, 173);
+        }
+
+        .brand span {
+            color: rgb(248, 100, 137);
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        nav li {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        nav a {
+            float: right;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        nav a:hover {
+            background-color: rgb(37, 79, 173, .6);
+        }
+
+        nav button {
+            background-color: rgb(37, 79, 173);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            margin-left: 20px;
+            cursor: pointer;
+            border: 0px;
+            padding: 10px;
+            width: 120px;
+            border-radius: 25px;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        nav button:hover {
+            background-color: rgb(248, 100, 137);
+        }
+
+        li.active a {
+            color: rgb(250, 167, 188);
+        }
+
+        /* Media query for mobile devices */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul {
+                margin-top: 20px;
+            }
+
+            nav li {
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+
+            nav a {
+                display: block;
+                padding: 8px;
+            }
+
+            .navbar-btn {
+                margin-top: 10px;
+            }
+
+            .section p {
+                max-width: 90% !important;
+            }
+
+            section {
+                margin-top: 100px;
+            }
+        }
+
+        h2 span {
+            color: rgb(248, 100, 137);
+        }
+
+
+        /* Sections */
+        .section-container {
+            position: relative;
+        }
+
+        .section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: none;
+            padding: 20px;
+            animation-duration: 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-fill-mode: both;
+            align-items: center;
+            text-align: center;
+        }
+
+        .section p {
+            max-width: 70%;
+            margin: 0 auto;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section#home {
+            z-index: 0;
+        }
+
+        .section#about {
+            z-index: 1;
+        }
+
+        .section#settings {
+            z-index: 2;
+        }
+
+        /* Slide and fade animations for incoming and outgoing sections */
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(25%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeOutRight {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(-25%);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-25%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeOutLeft {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(25%);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutLeft {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .slideInRight {
+            animation-name: slideInRight, fadeInRight;
+        }
+
+        .slideOutRight {
+            animation-name: slideOutRight, fadeOutRight;
+        }
+
+        .slideInLeft {
+            animation-name: slideInLeft, fadeInLeft;
+        }
+
+        .slideOutLeft {
+            animation-name: slideOutLeft, fadeOutLeft;
+        }
+
+        /* Settings section styles */
+
+        .centered-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 40px;
+        }
+
+        .login-card {
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: rgba(211, 155, 206, 0.3);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 60px;
+
+            width: 30%;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .centered-container {
+                flex-direction: column;
+                margin-top: 10px;
+            }
+
+            .login-card {
+                width: 100%;
+            }
+        }
+
+        #updateform,
+        #emailUpdateform,
+        #deleteform {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        input {
+            width: 100%;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(37, 79, 173);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: 0px;
+            border-radius: 25px;
+            margin-top: 24px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgb(248, 100, 137);
+        }
+
+        /* alert message for forms */
+        @keyframes shake {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(5deg);
+            }
+
+            50% {
+                transform: rotate(0eg);
+            }
+
+            75% {
+                transform: rotate(-5deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .strong-shake {
+            animation: shake 0.15s infinite;
+        }
+
+        .alert {
+            text-align: center;
+            color: rgb(248, 100, 137);
+        }
+    </style>
 </head>
 
 <body>
+    <div class="background-container"></div>
     <div>
-        <h2>
-            Welcome,<br>
-            <%= username %>
-        </h2>
+        <nav>
+            <h1 class="brand">Br<span>and</span></h1>
+            <ul>
+                <li class="active home"><a onclick="showSection('home')">Home</a></li>
+                <li class="about"><a onclick="showSection('about')">About</a></li>
+                <li class="settings"><a onclick="showSection('settings')">Settings</a></li>
+                <li class="navbar-btn" onclick="logout()"><button>Log out</button></li>
+            </ul>
+        </nav>
     </div>
-    <div>
-        <button onclick="logout()">Log out</button>
+    <div class="section-container">
+        <section class="section active" id="home">
+            <h2>
+                Welcome,<br>
+                <span>
+                    <%= username %>
+                </span>
+            </h2>
+            <p>Welcome to the Enchanted Garden! (Just some demo text lol)</p>
+            <br>
+            <p>
+                Embark on a magical journey through the Enchanted Garden, where stories come alive, and dreams take
+                flight. Immerse yourself in a world of wonder and let your imagination soar. Join us in creating tales
+                of bravery, love, and adventure. Let the magic unfold as you explore the realms of fantasy and let your
+                creativity shine!
+            </p>
+            <br>
+            <p>Step into our enchanted realm and be captivated by the power of storytelling. The adventure awaits!</p>
+        </section>
+        <section class="section" id="about">
+            <h2>Demo <span>About</span></h2>
+            <p>About the Developer - Kaustubh</p>
+            <br>
+            <p>Hello, I'm Kaustubh, the creator of this whimsical web app. I'm a passionate storyteller and a firm
+                believer in the magic of words. With this project, I aim to ignite the spark of imagination in everyone
+                who visits the Enchanted Garden.</p>
+            <br>
+            <p>I invite you to join me on this enchanting journey of exploration and creativity. The Enchanted Garden is
+                an open-source project, and I encourage collaboration and contributions from fellow enthusiasts. Let's
+                weave tales together and spread the joy of storytelling far and wide!</p>
+            <br>
+            <p>Connect with me on GitHub (<a href="https://github.com/costomato" target="_blank">costomato</a>) and
+                let's create something magical!</p>
+            <br>
+            <p>Get the source code for this project<a href="https://github.com/costomato/nodejs-login-signup"
+                    target="_blank">here</a></p>
+        </section>
+        <section class="section" id="settings">
+            <div class="centered-container">
+                <div class="login-card">
+                    <form id="updateform">
+                        <input type="text" id="name" placeholder="New name">
+                        <input type="password" id="pass1" minlength="8" placeholder="New password">
+                        <input type="password" id="pass2" minlength="8" placeholder="Confirm new password">
+                        <input type="submit" value="Update">
+                    </form>
+                    <h3 class="alert"></h3>
+                </div>
+                <div class="login-card">
+                    <form id="emailUpdateform">
+                        <input type="email" id="email" placeholder="New email" required>
+                        <input type="submit" value="Update">
+                    </form>
+                    <h3 class="alert"></h3>
+                </div>
+                <div class="login-card">
+                    <form id="deleteform">
+                        <input type="password" id="currentPass" placeholder="Current password" required>
+                        <input type="submit" value="Delete account">
+                    </form>
+                    <h3 class="alert"></h3>
+                </div>
+            </div>
+        </section>
     </div>
-    <div>
-        <h3>Settings:</h3>
-        <form id="updateform">
-            <input type="text" id="name" placeholder="New name">
-            <br>
-            <hr>
-            <input type="password" id="pass1" minlength="8" placeholder="New password">
-            <br>
-            <input type="password" id="pass2" minlength="8" placeholder="Confirm new password">
-            <br>
-            <hr>
-            <button type="submit">Update</button>
-            <br>
-        </form>
-        <hr>
-        <h3 id="message"></h3>
-        <hr>
-        <form id="emailUpdateform">
-            <input type="email" id="email" placeholder="New email" required>
-            <br><br>
-            <button type="submit">Update</button>
-            <br>
-        </form>
-    </div>
-    <hr>
-    <hr>
-    <hr>
-    <form id="deleteform">
-        <input type="password" id="currentPass" placeholder="Current password" required>
-        <br><br>
-        <button type="submit">Delete account</button>
-        <br>
-    </form>
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
-    integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    axios.defaults.baseURL = `${location.origin}/api/v1`;
-    axios.defaults.headers.common['api-key'] = 'mockKey987';
-    const logout = () => {
-        document.cookie.split(";").forEach((c) => { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
-        window.location.href = `${location.origin}/login`;
-    }
 
-    $('#updateform').submit(() => {
-        $("#message").html("Updating... Please wait.")
-        const update = {};
-        if ($("#name").val())
-            update.name = $("#name").val();
-        if (($("#pass1").val() || $("#pass2").val()))
-            if ($("#pass1").val() == $("#pass2").val())
-                update.password = $("#pass1").val();
-            else
-                $("#message").html("Passwords do not match")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+        integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        // sticky navbar
+        window.onscroll = function () { stickyNav() };
 
-        axios.post('/updateuser', {
-            _id: ('; ' + document.cookie).split(`; user=`).pop().split(';')[0],
-            sessionToken: ('; ' + document.cookie).split(`; sessionToken=`).pop().split(';')[0],
-            update: update
-        })
-            .then(res => {
-                if (res.data.statusOk) {
-                    const EXP_DAYS = 180
-                    const d = new Date();
-                    d.setTime(d.getTime() + (EXP_DAYS * 24 * 60 * 60 * 1000));
-                    if (update.name)
-                        document.cookie = `name=${update._name}; expires=${d.toUTCString()}; path=/`;
-                    if (res.data.data.newSessionToken)
-                        document.cookie = `sessionToken=${res.data.data.newSessionToken}; expires=${d.toUTCString()}; path=/`;
-                }
-                $("#message").html(res.data.statusString)
-            })
-            .catch(err => {
-                $("#message").html("Some error ocurred")
-            });
+        var navlist = document.getElementsByTagName('nav')[0]
+        var sticky = navlist.offsetTop;
 
-        return false;
-    })
-
-    $('#emailUpdateform').submit(() => {
-        $("#message").html("Sending verification link on new email... Please wait.");
-        axios.post('/getEmailUpdateLink', {
-            oldEmail: ('; ' + document.cookie).split(`; email=`).pop().split(';')[0],
-            sessionToken: ('; ' + document.cookie).split(`; sessionToken=`).pop().split(';')[0],
-            newEmail: $("#email").val()
-        })
-            .then(res => {
-                $("#message").html(res.data.statusString)
-            })
-            .catch(err => {
-                $("#message").html("Some error ocurred")
-            });
-
-        return false;
-    })
-
-    $('#deleteform').submit(() => {
-        $("#message").html("Deleting account...");
-        axios.delete('/deleteUser', {
-            data: {
-                _id: ('; ' + document.cookie).split(`; user=`).pop().split(';')[0],
-                email: ('; ' + document.cookie).split(`; email=`).pop().split(';')[0],
-                password: $("#currentPass").val()
+        /* Function to stick the nav bar */
+        function stickyNav() {
+            if (window.pageYOffset >= sticky) {
+                navlist.classList.add("sticky")
             }
-        })
-            .then(res => {
-                if (res.data.statusOk)
-                    logout();
-                $("#message").html(res.data.statusString);
-            })
-            .catch(err => {
-                $("#message").html("Some error ocurred")
-            });
+            else {
+                navlist.classList.remove("sticky");
+            }
+        }
 
-        return false;
-    })
-</script>
+        // section navigation
+        let currentSectionId = 'home';
+        function showSection(sectionId) {
+            if (currentSectionId !== sectionId) {
+                // handle list item indication
+                $(`nav ul li.${currentSectionId}`)[0].classList.remove('active')
+                $(`nav ul li.${sectionId}`)[0].classList.add('active')
+
+                // handle section change
+                const section = document.getElementById(sectionId)
+                const currentSection = document.getElementById(currentSectionId)
+                const position = section.compareDocumentPosition(currentSection)
+
+                // Remove all classes from both sections except the section class
+                currentSection.className = 'section'
+                section.className = 'section'
+
+                if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
+                    currentSection.classList.add('active', 'slideOutLeft')
+                    section.classList.add('active', 'slideInLeft')
+                } else {
+                    currentSection.classList.add('active', 'slideOutRight')
+                    section.classList.add('active', 'slideInRight')
+                }
+                setTimeout(() => {
+                    currentSection.classList.remove('active')
+                }, 300);
+                currentSectionId = sectionId
+            }
+        }
+
+        // alert message
+        const alertHeading = $('.alert');
+        function showAlert(message, formIndex) {
+            console.log(message, formIndex)
+            alertHeading[formIndex].textContent = message;
+
+            // Add the shake animation class
+            alertHeading[formIndex].classList.add('strong-shake');
+
+            // Remove the shake class after the animation is complete
+            setTimeout(() => {
+                alertHeading[formIndex].classList.remove('strong-shake');
+            }, 400);
+        }
+
+        // handling settings forms
+        axios.defaults.baseURL = `${location.origin}/api/v1`;
+        axios.defaults.headers.common['api-key'] = 'mockKey987';
+        const logout = () => {
+            document.cookie.split(";").forEach((c) => { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+            window.location.href = `${location.origin}/login`;
+        }
+
+        $('#updateform').submit((event) => {
+            event.preventDefault()
+            alertHeading[0].textContent = "Updating... Please wait."
+            const update = {};
+            if ($("#name").val())
+                update.name = $("#name").val();
+            if (($("#pass1").val() || $("#pass2").val()))
+                if ($("#pass1").val() === $("#pass2").val())
+                    update.password = $("#pass1").val();
+                else
+                    showAlert("Passwords do not match", 0)
+
+            if ($.isEmptyObject(update)) {
+                showAlert("Please enter something to update", 0)
+                return
+            }
+
+            axios.post('/updateuser', {
+                _id: ('; ' + document.cookie).split(`; user=`).pop().split(';')[0],
+                sessionToken: ('; ' + document.cookie).split(`; sessionToken=`).pop().split(';')[0],
+                update: update
+            })
+                .then(res => {
+                    if (res.data.statusOk) {
+                        if (update.name)
+                            $('h2 span')[0].textContent = update.name
+                        const EXP_DAYS = 180
+                        const d = new Date();
+                        d.setTime(d.getTime() + (EXP_DAYS * 24 * 60 * 60 * 1000));
+                        if (update.name)
+                            document.cookie = `name=${update._name}; expires=${d.toUTCString()}; path=/`;
+                        if (res.data.data.newSessionToken)
+                            document.cookie = `sessionToken=${res.data.data.newSessionToken}; expires=${d.toUTCString()}; path=/`;
+                    }
+                    showAlert(res.data.statusString, 0)
+                })
+                .catch(err => {
+                    showAlert("Some error ocurred", 0)
+                });
+
+            return false;
+        })
+
+        $('#emailUpdateform').submit((event) => {
+            event.preventDefault()
+            alertHeading[1].textContent = "Sending verification link on new email... Please wait."
+            axios.post('/getEmailUpdateLink', {
+                oldEmail: ('; ' + document.cookie).split(`; email=`).pop().split(';')[0],
+                sessionToken: ('; ' + document.cookie).split(`; sessionToken=`).pop().split(';')[0],
+                newEmail: $("#email").val()
+            })
+                .then(res => {
+                    showAlert(res.data.statusString, 1)
+                })
+                .catch(err => {
+                    showAlert("Some error ocurred", 1)
+                });
+
+            return false;
+        })
+
+        $('#deleteform').submit((event) => {
+            event.preventDefault()
+            alertHeading[2].textContent = "Deleting account..."
+            axios.delete('/deleteUser', {
+                data: {
+                    _id: ('; ' + document.cookie).split(`; user=`).pop().split(';')[0],
+                    email: ('; ' + document.cookie).split(`; email=`).pop().split(';')[0],
+                    password: $("#currentPass").val()
+                }
+            })
+                .then(res => {
+                    if (res.data.statusOk)
+                        logout();
+                    showAlert(res.data.statusString, 2)
+                })
+                .catch(err => {
+                    showAlert("Some error ocurred", 2)
+                });
+
+            return false;
+        })
+    </script>
+</body>
 
 </html>
