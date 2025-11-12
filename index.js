@@ -15,6 +15,7 @@ const authenticateUser = require("./public/controller/authenticateUser");
 const { sendVerificationOtp, verifyOtp, verifyNewEmail } = require("./public/controller/verifyUser");
 
 const sendMail = require("./public/utils/sendMail");
+const sendMailOld = require("./public/utils/sendMailOld");
 
 const PORT = process.env.PORT || 8080;
 const API_KEY = process.env.API_KEY;
@@ -211,6 +212,19 @@ app.post(`${PRIMARY_ENDPOINT}/sendMail`, async (req, res) => {
   */
   if (req.headers["api-key"] === API_KEY) {
     const response = await sendMail(req.body);
+    res.send(response);
+  } else {
+    res.send({ statusOk: false, statusString: "API authentication failed" });
+  }
+});
+
+app.post(`${PRIMARY_ENDPOINT}/sendMailOld`, async (req, res) => {
+  /*
+  req.body contains
+  first name, last name, email, message, phone
+  */
+  if (req.headers["api-key"] === API_KEY) {
+    const response = await sendMailOld(req.body);
     res.send(response);
   } else {
     res.send({ statusOk: false, statusString: "API authentication failed" });
